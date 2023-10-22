@@ -1,2 +1,2 @@
 # Rock, Paper, and Scissors game
-A first scatch to implement the "Rock - Paper - Scissors" game in JavaScript for The Odin Project.
+A first scratch to implement the "Rock - Paper - Scissors" game in JavaScript for The Odin Project.
