@@ -80,3 +80,36 @@ function playRound(playerSelection, computerSelection) {
 
   return roundResult;
 }
+
+
+/**
+ * Doc
+ * @param maxRounds
+ * @returns {number}
+ */
+function playGame(maxRounds) {
+  const NUMBER_OF_PLAYERS = 2;
+  const winningEdge = maxRounds / NUMBER_OF_PLAYERS;
+
+  let round = 0;
+  let randomNumber = 0;
+  let playerSelection = "";
+  let computerSelection = "";
+  let playerResult = 0;
+
+  for (round; round <= maxRounds; round++) {
+    randomNumber = getRandomNumberUpTo(3);
+    playerSelection = prompt("Rock, Paper or Scissors?!", "");
+    computerSelection = getComputerChoice(randomNumber);
+    playerResult += playRound(playerSelection, computerSelection);
+  }
+
+  if (playerResult) {
+    return (playerResult > winningEdge) ? 1 : 0;
+  } else {
+    playGame(1);
+  }
+}
+
+
+playGame(5) ? console.log("You won") : console.log("You lost");
