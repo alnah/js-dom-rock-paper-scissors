@@ -103,7 +103,7 @@ function playRound(playerSelection, computerSelection) {
  */
 function playGame(maxRounds) {
 
-  let round = 0;
+  let round = 1;
   let randomNumber = 0;
   let playerSelection = "";
   let computerSelection = "";
