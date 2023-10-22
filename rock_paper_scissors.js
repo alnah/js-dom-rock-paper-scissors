@@ -11,7 +11,7 @@ their choice through a prompt
  * @param {number} number - The upper limit of the random number
  * @returns {number} A random number between 1 and `n` inclusive
  */
-let getRandomNumberUpTo = (number) => Math.ceil((Math.random() * number));
+let getRandomNumber = (number) => Math.ceil((Math.random() * number));
 
 
 /**
@@ -112,7 +112,7 @@ function playGame(maxRounds) {
   let playerResult = 0;
 
   for (round; round <= maxRounds; round++) {
-    randomNumber = getRandomNumberUpTo(3);
+    randomNumber = getRandomNumber(3);
     playerSelection = prompt("Rock, Paper or Scissors?!", "");
     computerSelection = getComputerChoice(randomNumber);
     playerResult += playRound(playerSelection, computerSelection);
