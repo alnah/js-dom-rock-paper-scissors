@@ -1,6 +1,5 @@
 /**
- * Returns randomly "Rock", "Paper" or "Scissors"
- * This function makes the computer play
+ * Return randomly "rock", "paper" or "scissors" for the computer choice
  * @return {string} The computer's choice
  */
 function getComputerChoice() {
