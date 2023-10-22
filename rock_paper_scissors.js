@@ -42,7 +42,8 @@ function getComputerChoice(number) {
 
 
 /**
- * Capitalizes the first letter of the given string and makes the rest lowercase
+ * Capitalizes the first letter of the given selection and makes the rest
+ * lowercase
  *
  * @param {string} selection - A game choice string ("rock", "paper", or
  * "scissors")
