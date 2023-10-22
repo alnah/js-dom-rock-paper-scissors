@@ -11,7 +11,7 @@ their choice through a prompt
  * @param {number} number - The upper limit of the random number
  * @returns {number} A random number between 1 and `n` inclusive
  */
-let getRandomNumber = (number) => Math.ceil((Math.random() * number));
+let getPositiveRandomNumberUpTo = (number) => Math.ceil((Math.random() * number));
 
 
 /**
@@ -71,7 +71,7 @@ function playRound(playerSelection, computerSelection) {
   computerSelection = capitalizeSelection(computerSelection);
 
   if (playerSelection === computerSelection) {
-    console.log("Nobody wins! Play again...");
+    console.log("Nobody wins that round!");
     roundResult = 0;
 
   } else {
@@ -102,28 +102,36 @@ function playRound(playerSelection, computerSelection) {
  * - 0 otherwise
  */
 function playGame(maxRounds) {
-  const NUMBER_OF_PLAYERS = 2;
-  const winningEdge = maxRounds / NUMBER_OF_PLAYERS;
 
   let round = 0;
   let randomNumber = 0;
   let playerSelection = "";
   let computerSelection = "";
+  let roundResult = 0;
   let playerResult = 0;
+  let computerResult = 0;
 
   for (round; round <= maxRounds; round++) {
-    randomNumber = getRandomNumber(3);
+    randomNumber = getPositiveRandomNumberUpTo(3);
     playerSelection = prompt("Rock, Paper or Scissors?!", "");
     computerSelection = getComputerChoice(randomNumber);
-    playerResult += playRound(playerSelection, computerSelection);
+    roundResult += playRound(playerSelection, computerSelection);
+
+    if (roundResult === 1) {
+      playerResult += 1;
+    } else {
+      computerResult += 1;
+    }
   }
 
-  if (playerResult) {
-    return (playerResult > winningEdge) ? 1 : 0;
-  } else {
+  if (playerResult === computerResult) {
+    console.log("Nobody won the game! Play an extra round...")
     playGame(1);
+  } else {
+    return (playerResult > computerResult) ? 1 : 0;
   }
+
 }
 
 
-playGame(5) ? console.log("You won") : console.log("You lost");
+playGame(1) ? console.log("You won") : console.log("You lost");
