@@ -136,4 +136,4 @@ function playGame(maxRounds) {
 }
 
 
-playGame(1) ? console.log("You won") : console.log("You lost");
+playGame(5) ? console.log("You won") : console.log("You lost");
