@@ -112,6 +112,7 @@ function playGame(maxRounds) {
   let computerResult = 0;
 
   for (round; round <= maxRounds; round++) {
+
     randomNumber = getPositiveRandomNumberUpTo(3);
     playerSelection = prompt("Rock, Paper or Scissors?!", "");
     computerSelection = getComputerChoice(randomNumber);
@@ -122,6 +123,7 @@ function playGame(maxRounds) {
     } else {
       computerResult += 1;
     }
+
   }
 
   if (playerResult === computerResult) {
