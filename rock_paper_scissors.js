@@ -8,7 +8,7 @@
  * finally round it up with Math.ceil() to obtain a number between 1 and 3
  * @returns {number} The random number between 1 and 3 included
  */
-let getRandomNumberFrom1to3 = () => Math.ceil((Math.random() * 3));
+let getPositiveRandomNumberUpTo = (n) => Math.ceil((Math.random() * n));
 
 
 /**
