@@ -1,21 +1,25 @@
-// This in an implementation to play Rock - Paper - Scissors game
-// So far this is a just code logic that should run with JavaScript console only
-
-
-/**
- * Return a number between 1 and 3 included, using Math.random() to return a
- * floating-point number between 0 and 1, then scale it to a range of 3, and
- * finally round it up with Math.ceil() to obtain a number between 1 and 3
- * @returns {number} The random number between 1 and 3 included
+/*
+This script allows a user to play the classic game of Rock, Paper, Scissors
+against the computer: the game is played in rounds, and the player provides
+their choice through a prompt
  */
-let getRandomNumberUpTo = (n) => Math.ceil((Math.random() * n));
 
 
 /**
- * Return a choice for the computer thanks to a random number from 1 to 3
- * included where 1 is "rock", 2 is "paper" and 3 is "scissors
- * @param {number} number - The random number
- * @return {string} The computer's choice
+ * Generates a random number between 1 and a given maximum
+ *
+ * @param {number} number - The upper limit of the random number
+ * @returns {number} A random number between 1 and `n` inclusive
+ */
+let getRandomNumberUpTo = (number) => Math.ceil((Math.random() * number));
+
+
+/**
+ * Converts a number representation into one of the game choices: "rock",
+ * "paper", or "scissors"
+ *
+ * @param {number} number - A random number between 1 and 3
+ * @returns {string} The computer's choice corresponding to the input number
  */
 function getComputerChoice(number) {
 
@@ -38,10 +42,11 @@ function getComputerChoice(number) {
 
 
 /**
- * Capitalize a selection thanks to a string concatenation putting together
- * its first character into upper case and the remaining part into lower case
- * @param {string} selection - The selection to capitalize
- * @return {string} The word capitalized
+ * Capitalizes the first letter of the given string and makes the rest lowercase
+ *
+ * @param {string} selection - A game choice string ("rock", "paper", or
+ * "scissors")
+ * @returns {string} The capitalized version of the input string
  */
 let capitalizeSelection = (selection) => {
   return selection.charAt(0).toUpperCase() + selection.slice(1).toLowerCase();
@@ -49,9 +54,15 @@ let capitalizeSelection = (selection) => {
 
 
 /**
- * Return 1 when player wins, -1 when computer loses, 0 when nobody wins
- * @param {string} playerSelection The player's selection
- * @param {string} computerSelection The computer's selection
+ * Compares the player's choice and the computer's choice to determine the
+ * winner of a round
+ *
+ * @param {string} playerSelection - The player's choice for the round
+ * @param {string} computerSelection - The computer's choice for the round
+ * @returns {number}
+ * - 1 if the player wins
+ * - -1 if the computer wins
+ * - 0 for a tie
  */
 function playRound(playerSelection, computerSelection) {
 
@@ -83,9 +94,12 @@ function playRound(playerSelection, computerSelection) {
 
 
 /**
- * Doc
- * @param maxRounds
+ * Orchestrates multiple rounds of the game and determines the overall winner
+ *
+ * @param {number} maxRounds - The total number of rounds to be played
  * @returns {number}
+ * - 1 if the player wins the game
+ * - 0 otherwise
  */
 function playGame(maxRounds) {
   const NUMBER_OF_PLAYERS = 2;
