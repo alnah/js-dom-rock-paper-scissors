@@ -3,17 +3,23 @@
 
 
 /**
- * Return randomly "rock", "paper" or "scissors" for the computer choice
+ * Return a number between 1 and 3 included, using Math.random to return a
+ * floating-point number between 0 and 1, then we scale it to a range of 3, and
+ * then we round it up to obtain a number between 1 and 3
+ * @returns {number} The random number between 1 and 3 included
+ */
+let getRandomNumberFrom1to3 = () => Math.ceil((Math.random() * 3));
+
+
+/**
+ * Return a choice for the computer thanks to a random number from 1 to 3
+ * included where 1 is "rock", 2 is "paper" and 3 is "scissors
+ * @param {number} number - The random number
  * @return {string} The computer's choice
  */
-function getComputerChoice() {
-  // Math.random returns a floating-point number between 0 and 1, so we scale it
-  // to a range of 3, and then we round it up to obtain a number between 1 and 3
-  const randomNumber = Math.ceil((Math.random() * 3));
-  // init value for computerChoice is an empty string
+function getComputerChoice(number = getRandomNumberFrom1to3()) {
   let computerChoice = "";
-  // we assign "rock", "paper" or "scissors" thanks to our random number
-  switch (randomNumber) {
+  switch (number) {
     case 1:
       computerChoice = "rock";
       break;
