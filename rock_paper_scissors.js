@@ -1,11 +1,11 @@
-// This in an implementation to play Rock - Paper - Scissors
+// This in an implementation to play Rock - Paper - Scissors game
 // So far this is a just code logic that should run with JavaScript console only
 
 
 /**
- * Return a number between 1 and 3 included, using Math.random to return a
- * floating-point number between 0 and 1, then we scale it to a range of 3, and
- * then we round it up to obtain a number between 1 and 3
+ * Return a number between 1 and 3 included, using Math.random() to return a
+ * floating-point number between 0 and 1, then scale it to a range of 3, and
+ * finally round it up with Math.ceil() to obtain a number between 1 and 3
  * @returns {number} The random number between 1 and 3 included
  */
 let getRandomNumberFrom1to3 = () => Math.ceil((Math.random() * 3));
