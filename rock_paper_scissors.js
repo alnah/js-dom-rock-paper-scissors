@@ -46,7 +46,7 @@ let capitalizeSelection = (selection) => {
 
 
 /**
- * Return the result of the round between the computer and the player
+ * Return 1 when player wins, -1 when computer loses, 0 when nobody wins
  * @param {string} playerSelection The player's selection
  * @param {string} computerSelection The computer's selection
  */
@@ -55,7 +55,8 @@ function playRound(playerSelection, computerSelection) {
   playerSelection = capitalizeSelection(playerSelection);
   computerSelection = capitalizeSelection(computerSelection);
   if (playerSelection === computerSelection) {
-    roundResult = "Nobody wins! Play again...";
+    console.log("Nobody wins! Play again...");
+    roundResult = 0;
   } else {
     if (playerSelection === "Rock" && computerSelection === "Scissors"
       || playerSelection === "Paper" && computerSelection === "Rock"
@@ -64,7 +65,7 @@ function playRound(playerSelection, computerSelection) {
       roundResult = 1
     } else {
       console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-      roundResult = 0
+      roundResult = -1
     }
   }
   return roundResult;
