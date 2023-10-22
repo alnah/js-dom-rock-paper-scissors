@@ -60,9 +60,11 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection === "Rock" && computerSelection === "Scissors"
       || playerSelection === "Paper" && computerSelection === "Rock"
       || playerSelection === "Scissors" && computerSelection === "Paper") {
-      roundResult = `You win! ${playerSelection} beats ${computerSelection}`
+      console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+      roundResult = 1
     } else {
-      roundResult = `You lose! ${computerSelection} beats ${playerSelection}`
+      console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
+      roundResult = 0
     }
   }
   return roundResult;
