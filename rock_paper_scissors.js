@@ -18,7 +18,9 @@ let getRandomNumberFrom1to3 = () => Math.ceil((Math.random() * 3));
  * @return {string} The computer's choice
  */
 function getComputerChoice(number) {
+
   let computerChoice;
+
   switch (number) {
     case 1:
       computerChoice = "rock";
@@ -30,6 +32,7 @@ function getComputerChoice(number) {
       computerChoice = "scissors";
       break;
   }
+
   return computerChoice;
 }
 
@@ -51,22 +54,29 @@ let capitalizeSelection = (selection) => {
  * @param {string} computerSelection The computer's selection
  */
 function playRound(playerSelection, computerSelection) {
+
   let roundResult;
   playerSelection = capitalizeSelection(playerSelection);
   computerSelection = capitalizeSelection(computerSelection);
+
   if (playerSelection === computerSelection) {
     console.log("Nobody wins! Play again...");
     roundResult = 0;
+
   } else {
+
     if (playerSelection === "Rock" && computerSelection === "Scissors"
       || playerSelection === "Paper" && computerSelection === "Rock"
       || playerSelection === "Scissors" && computerSelection === "Paper") {
       console.log(`You win! ${playerSelection} beats ${computerSelection}`);
       roundResult = 1
+
     } else {
       console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
       roundResult = -1
     }
+
   }
+
   return roundResult;
 }
