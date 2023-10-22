@@ -1,3 +1,7 @@
+// This in an implementation to play Rock - Paper - Scissors
+// So far this is a just code logic that should run with JavaScript console only
+
+
 /**
  * Return randomly "rock", "paper" or "scissors" for the computer choice
  * @return {string} The computer's choice
