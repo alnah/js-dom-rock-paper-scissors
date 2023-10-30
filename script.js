@@ -1,30 +1,120 @@
-/*
-This script allows a user to play the classic game of Rock, Paper, Scissors
-against the computer: the game is played in rounds, and the player provides
-their choice through a prompt
- */
+const clickRock = document.querySelector("#btn-rock");
+const clickPaper = document.querySelector("#btn-paper");
+const clickScissors = document.querySelector("#btn-scissors");
+const roundNumber = document.querySelector("#round-number");
+const roundInfo = document.querySelector("#round-info");
+const playerScore = document.querySelector("#player-score");
+const computerScore = document.querySelector("#computer-score");
+const gameScore = document.querySelector("#game-score");
+const tiesScore = document.querySelector("#ties-score");
+const newGame = document.querySelector("#new-game");
+const yesNewGame = document.querySelector("#yes-new-game");
+const noNewGame = document.querySelector("#no-new-game");
+const allElements = [
+  roundNumber,
+  roundInfo,
+  playerScore,
+  computerScore,
+  tiesScore,
+  gameScore,
+  newGame,
+  yesNewGame,
+  noNewGame
+];
+
+const MAX_ROUNDS = 5;
+let round = 0;
+let playerResult = 0;
+let computerResult = 0;
+let tiesResult = 0;
+
+clickRock.addEventListener("click", () => playRound("rock"));
+clickPaper.addEventListener("click", () => playRound("paper"));
+clickScissors.addEventListener("click", () => playRound("scissors"))
+
+function endGame() {
+  if (round === MAX_ROUNDS) {
+    if (playerResult === computerResult) {
+      gameScore.textContent = "Nobody won the game!";
+    } else if (playerResult > computerResult) {
+      gameScore.textContent = "You won the game!";
+    } else {
+      gameScore.textContent = "You lost the game...";
+    }
+    for (let element of [clickRock, clickPaper, clickScissors]) {
+      element.remove()
+    }
+
+    newGame.textContent = "Do you want to play again?";
+    roundInfo.textContent = "";
+    noNewGame.textContent = "❌";
+    yesNewGame.textContent = "✅";
+    yesNewGame.addEventListener("click", startGame);
+    noNewGame.addEventListener("click", sayGoodbye);
+  }
+}
+
+function startGame() {
+  round = 0;
+  playerResult = 0;
+  computerResult = 0;
+  tiesResult = 0;
+
+  for (let node of allElements) {
+    node.textContent = "";
+  }
+  for (let element of [clickRock, clickPaper, clickScissors]) {
+    document.body.insertBefore(element, roundNumber);
+  }
+}
+
+function sayGoodbye() {
+  for (let node of allElements) {
+    node.textContent = "";
+  }
+  noNewGame.textContent = "Thank you for playing!"
+}
+
+function playRound(playerSelection) {
+  let capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+  let roundResult;
+  let computerSelection = capitalize(getComputerChoice());
+  playerSelection = capitalize(playerSelection);
+
+  if (playerSelection === computerSelection) {
+    roundResult = "nobody";
+    roundInfo.textContent = "Nobody wins that round!"
+  } else {
+    if (playerSelection === "Rock" && computerSelection === "Scissors"
+      || playerSelection === "Paper" && computerSelection === "Rock"
+      || playerSelection === "Scissors" && computerSelection === "Paper") {
+      roundInfo.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
+      roundResult = "player";
+    } else {
+      roundResult = "computer";
+      roundInfo.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+    }
+  }
+  if (roundResult === "player") {
+    playerResult += 1;
+  } else if (roundResult === "computer") {
+    computerResult += 1;
+  } else {
+    tiesResult += 1;
+  }
+
+  round += 1;
+  roundNumber.textContent = `Round n°${round}:`;
+  playerScore.textContent = `- Player's score: ${playerResult}`
+  computerScore.textContent = `- Computer's score: ${computerResult}`
+  tiesScore.textContent = `- Ties: ${tiesResult}`
+  endGame();
+}
 
 
-/**
- * Generate a random number between 1 and a given maximum
- *
- * @param {number} number - The upper limit of the random number
- * @returns {number} A random number between 1 and `number` inclusive
- */
-let getPositiveRandomNumberUpTo = (number) => Math.ceil((Math.random() * number));
-
-
-/**
- * Convert a number representation into one of the game choices: "rock",
- * "paper", or "scissors"
- *
- * @param {number} number - A random number between 1 and 3
- * @returns {string} The computer's choice corresponding to the input number
- */
-function getComputerChoice(number) {
-
-  let computerChoice;
-
+function getComputerChoice() {
+  let computerChoice = "";
+  let number = Math.ceil((Math.random() * 3));
   switch (number) {
     case 1:
       computerChoice = "rock";
@@ -36,105 +126,5 @@ function getComputerChoice(number) {
       computerChoice = "scissors";
       break;
   }
-
   return computerChoice;
 }
-
-
-/**
- * Capitalize the first letter of the given selection and makes the rest
- * lowercase
- *
- * @param {string} selection - A game choice string ("rock", "paper", or
- * "scissors")
- * @returns {string} The capitalized version of the input string
- */
-let capitalizeSelection = (selection) => {
-  return selection.charAt(0).toUpperCase() + selection.slice(1).toLowerCase();
-};
-
-
-/**
- * Compare the player's choice and the computer's choice to determine the
- * winner of a round
- *
- * @param {string} playerSelection - The player's choice for the round
- * @param {string} computerSelection - The computer's choice for the round
- * @returns {number}
- * - 1 if the player wins
- * - -1 if the computer wins
- * - 0 for a tie
- */
-function playRound(playerSelection, computerSelection) {
-
-  let roundResult;
-  playerSelection = capitalizeSelection(playerSelection);
-  computerSelection = capitalizeSelection(computerSelection);
-
-  if (playerSelection === computerSelection) {
-    console.log("Nobody wins that round!");
-    roundResult = 0;
-
-  } else {
-
-    if (playerSelection === "Rock" && computerSelection === "Scissors"
-      || playerSelection === "Paper" && computerSelection === "Rock"
-      || playerSelection === "Scissors" && computerSelection === "Paper") {
-      console.log(`You win! ${playerSelection} beats ${computerSelection}`);
-      roundResult = 1
-
-    } else {
-      console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-      roundResult = -1
-    }
-
-  }
-
-  return roundResult;
-}
-
-
-/**
- * Orchestrate multiple rounds of the game and determines the overall winner
- *
- * @param {number} maxRounds - The total number of rounds to be played
- * @returns {number}
- * - 1 if the player wins the game
- * - 0 otherwise
- */
-function playGame(maxRounds) {
-
-  let round = 1;
-  let randomNumber = 0;
-  let playerSelection = "";
-  let computerSelection = "";
-  let roundResult = 0;
-  let playerResult = 0;
-  let computerResult = 0;
-
-  for (round; round <= maxRounds; round++) {
-
-    randomNumber = getPositiveRandomNumberUpTo(3);
-    playerSelection = prompt("Rock, Paper or Scissors?!", "");
-    computerSelection = getComputerChoice(randomNumber);
-    roundResult += playRound(playerSelection, computerSelection);
-
-    if (roundResult === 1) {
-      playerResult += 1;
-    } else {
-      computerResult += 1;
-    }
-
-  }
-
-  if (playerResult === computerResult) {
-    console.log("Nobody won the game! Play an extra round...")
-    playGame(1);
-  } else {
-    return (playerResult > computerResult) ? 1 : 0;
-  }
-
-}
-
-
-playGame(5) ? console.log("You won") : console.log("You lost");
