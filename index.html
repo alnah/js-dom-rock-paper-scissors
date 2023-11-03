@@ -1,24 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <!--HTML Boilerplate-->
   <meta charset="UTF-8">
-  <title>Rock Paper Scissors</title>
-  <script src="script.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rock Paper Scissors Game</title>
+  <!--CSS Stylesheet-->
   <link rel="stylesheet" href="./style.css" type="text/css">
+  <!--Font-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap"
+    rel="stylesheet">
+  <!--JS Script-->
+  <script src="script.js" defer></script>
 </head>
+
 <body>
-  <h1>Rock Paper Scissors</h1>
-  <button id="btn-rock">✊</button>
-  <button id="btn-paper">✋</button>
-  <button id="btn-scissors">✌️</button>
-  <div id="round-number"></div>
-  <div id="round-info"></div>
-  <div id="player-score"></div>
-  <div id="computer-score"></div>
-  <div id="ties-score"></div>
-  <div id="game-score"></div>
-  <div id="new-game"></div>
-  <div id="yes-new-game"></div>
-  <div id="no-new-game"></div>
+<!--Header-->
+<hgroup class="header">
+  <h1 class="title">
+    Rock <span class="vs">vs</span> Paper <span class="vs">vs</span>
+    Scissors<br>
+  </h1>
+</hgroup>
+<!--Information-->
+<main>
+  <div class="game-info">
+    <div id="round-counter" class="rounds">Start the game to check the scores!</div>
+    <div class="scores-container">
+      <div id="player-score" class="scores">Player score 0</div>
+      <img id="player-choice" class="chosen img" src="./img/question-mark.svg" alt="question mark">
+      <img id="computer-choice" class="chosen img" src="./img/question-mark.svg" alt="question mark">
+      <div id="computer-score" class="scores">Computer score 0</div>
+    </div>
+    <div id="round-info" class="rounds">Make your choice!</div>
+  </div>
+
+  <!--Options-->
+  <div class="options-container">
+    <img id="rock" class="choice" src="./img/rock.svg" alt="rock">
+    <img id="paper" class="choice" src="./img/paper.svg" alt="paper">
+    <img id="scissors" class="choice" src="./img/scissors.svg"
+      alt="scissors">
+  </div>
+
+</main>
+<!--Footer-->
+<footer class="footer">
+  <div>© 2023 alnah</div>
+  <div><a href="https://github.com/alnah" target="_blank"><img id="github" class="github"
+    src="img/github.svg"
+    alt="github"></a>
+  </div>
+</footer>
+
 </body>
+<!--Overlay and Custom Alert-->
+<div class="overlay" id="overlay">
+  <div class="custom-alert">
+    <p id="end-game"></p>
+    <div id="play-again" class="play-again"></div>
+  </div>
+</div>
 </html>

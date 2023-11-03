@@ -1,0 +1,147 @@
+/*Variables*/
+:root {
+  --beige: #F6F1F1;
+  --clear-blue: #19A7CE;
+  --dark-blue: #146C94;
+}
+
+
+/*Body*/
+body {
+  font-family: 'Itim', cursive;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+
+/*All icons*/
+.chosen {
+  max-width: 3em;
+  padding: 1em;
+}
+.choice {
+  max-width: 5em;
+  padding: 1em;
+}
+.github {
+  max-width: 2em;
+}
+
+
+/*Header*/
+.header {
+  background: var(--dark-blue);
+  color: var(--beige);
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+.vs {
+  font-size: .5em;
+}
+
+
+/*Game info*/
+.game-info {
+  background: var(--clear-blue);
+  min-width: 100vw;
+  text-align: center;
+  padding: .5em;
+  text-transform: uppercase;
+}
+.scores-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+
+}
+.scores {
+  max-width: 75px;
+}
+
+
+/*!* Options *!*/
+.options-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  align-items: center;
+  gap: 1em;
+}
+
+
+/*Footer*/
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  background: var(--dark-blue);
+  margin-top: auto;
+  min-width: 100vw;
+  padding: .5em;
+}
+.github {
+  max-height: 1.5em;
+  transition: transform 0.1s linear;
+}
+.github:hover {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+  max-height: 1.6em;
+}
+
+
+/* Overlay */
+.overlay {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+
+/* Custom alert */
+.custom-alert {
+  padding: 20px;
+  background: lightcoral;
+  z-index: 3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border-radius: 1em;
+  text-align: center;
+}
+.play-again {
+  background: lightcoral;
+  color: black;
+  min-width: 10vw;
+  padding: 1em;
+  border: 5px solid black;
+  text-transform: uppercase;
+  border-radius: 1em;
+}
+
+
+/* Vibrating icons*/
+@keyframes vibrate {
+  0% {transform: translate(0);}
+  20% {transform: translate(-2px, 2px);}
+  40% {transform: translate(-2px, -2px);}
+  60% {transform: translate(2px, 2px);}
+  80% {transform: translate(2px, -2px);}
+  100% {transform: translate(0);}
+}
+.vibration {
+  animation: vibrate 0.5s;
+  animation-iteration-count: 1;
+}

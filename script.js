@@ -1,116 +1,123 @@
-const clickRock = document.querySelector("#btn-rock");
-const clickPaper = document.querySelector("#btn-paper");
-const clickScissors = document.querySelector("#btn-scissors");
-const roundNumber = document.querySelector("#round-number");
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
+const playerChoiceImg = document.querySelector("#player-choice");
+const computerChoiceImg = document.querySelector("#computer-choice");
+const roundCounterInfo = document.querySelector("#round-counter");
+const playerScoreInfo = document.querySelector("#player-score");
+const computerScoreInfo = document.querySelector("#computer-score");
 const roundInfo = document.querySelector("#round-info");
-const playerScore = document.querySelector("#player-score");
-const computerScore = document.querySelector("#computer-score");
-const gameScore = document.querySelector("#game-score");
-const tiesScore = document.querySelector("#ties-score");
-const newGame = document.querySelector("#new-game");
-const yesNewGame = document.querySelector("#yes-new-game");
-const noNewGame = document.querySelector("#no-new-game");
-const allElements = [
-  roundNumber,
-  roundInfo,
-  playerScore,
-  computerScore,
-  tiesScore,
-  gameScore,
-  newGame,
-  yesNewGame,
-  noNewGame
-];
+const overlay = document.querySelector('#overlay');
+const playAgain = document.querySelector("#play-again");
+const endGameInfo = document.querySelector('#end-game');
 
-const MAX_ROUNDS = 5;
-let round = 0;
-let playerResult = 0;
-let computerResult = 0;
-let tiesResult = 0;
+rock.addEventListener("click", () => playRound("rock", rock));
+paper.addEventListener("click", () => playRound("paper", paper));
+scissors.addEventListener("click", () => playRound("scissors", scissors));
 
-clickRock.addEventListener("click", () => playRound("rock"));
-clickPaper.addEventListener("click", () => playRound("paper"));
-clickScissors.addEventListener("click", () => playRound("scissors"))
+let roundCounter = 0;
+let playerScore = 0;
+let computerScore = 0;
 
-function endGame() {
-  if (round === MAX_ROUNDS) {
-    if (playerResult === computerResult) {
-      gameScore.textContent = "Nobody won the game!";
-    } else if (playerResult > computerResult) {
-      gameScore.textContent = "You won the game!";
-    } else {
-      gameScore.textContent = "You lost the game...";
-    }
-    for (let element of [clickRock, clickPaper, clickScissors]) {
-      element.remove()
-    }
-
-    newGame.textContent = "Do you want to play again?";
-    roundInfo.textContent = "";
-    noNewGame.textContent = "❌";
-    yesNewGame.textContent = "✅";
-    yesNewGame.addEventListener("click", startGame);
-    noNewGame.addEventListener("click", sayGoodbye);
-  }
-}
-
-function startGame() {
-  round = 0;
-  playerResult = 0;
-  computerResult = 0;
-  tiesResult = 0;
-
-  for (let node of allElements) {
-    node.textContent = "";
-  }
-  for (let element of [clickRock, clickPaper, clickScissors]) {
-    document.body.insertBefore(element, roundNumber);
-  }
-}
-
-function sayGoodbye() {
-  for (let node of allElements) {
-    node.textContent = "";
-  }
-  noNewGame.textContent = "Thank you for playing!"
-}
-
-function playRound(playerSelection) {
-  let capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+function playRound(playerChoice, element) {
+  let computerChoice;
   let roundResult;
-  let computerSelection = capitalize(getComputerChoice());
-  playerSelection = capitalize(playerSelection);
-
-  if (playerSelection === computerSelection) {
-    roundResult = "nobody";
-    roundInfo.textContent = "Nobody wins that round!"
-  } else {
-    if (playerSelection === "Rock" && computerSelection === "Scissors"
-      || playerSelection === "Paper" && computerSelection === "Rock"
-      || playerSelection === "Scissors" && computerSelection === "Paper") {
-      roundInfo.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
-      roundResult = "player";
-    } else {
-      roundResult = "computer";
-      roundInfo.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
-    }
-  }
-  if (roundResult === "player") {
-    playerResult += 1;
-  } else if (roundResult === "computer") {
-    computerResult += 1;
-  } else {
-    tiesResult += 1;
-  }
-
-  round += 1;
-  roundNumber.textContent = `Round n°${round}:`;
-  playerScore.textContent = `- Player's score: ${playerResult}`
-  computerScore.textContent = `- Computer's score: ${computerResult}`
-  tiesScore.textContent = `- Ties: ${tiesResult}`
-  endGame();
+  vibratePlayerImg(element);
+  computerChoice = getComputerChoice();
+  roundResult = getRoundResult(playerChoice, computerChoice);
+  updateChoiceImg(playerChoice, computerChoice);
+  updateGameInfo(playerChoice, computerChoice, roundResult);
+  endGame(playerScore, computerScore);
+  restartGame();
 }
 
+function vibratePlayerImg(element) {
+  element.classList.add('vibration');
+  element.addEventListener('animationend', function() {
+    element.classList.remove('vibration');
+  })
+}
+
+function updateChoiceImg(playerChoice, computerChoice) {
+  playerChoiceImg.src = `./img/${playerChoice}.svg`
+  computerChoiceImg.src = `./img/${computerChoice}.svg`
+}
+
+function endGame(playerScore, computerScore) {
+  let playerWon = playerScore === 5;
+  let computerWon = computerScore === 5;
+  if (playerWon || computerWon) {
+    overlay.style.display = "flex";
+    if (playerWon) {
+      endGameInfo.textContent = "Game over! You won the game! Play again!"
+    } else {
+      endGameInfo.textContent = "Game over! You lost! Try again!"
+    }
+  }
+}
+
+// Fonction pour fermer l'alerte personnalisée
+function restartGame() {
+  playAgain.textContent = "Play again";
+  playAgain.addEventListener("click", () => {
+    roundCounter = 0;
+    playerScore = 0;
+    computerScore = 0;
+    overlay.style.display = "";
+    roundCounterInfo.textContent = "Start the game to check the scores!"
+    playerScoreInfo.textContent = "Player score 0"
+    computerScoreInfo.textContent = "Computer score 0"
+    roundInfo.textContent = "Make your choice!"
+    for (let element of [playerChoiceImg, computerChoiceImg]) {
+      element.src = `./img/question-mark.svg`
+    }
+  })
+}
+
+function getRoundResult(playerChoice, computerChoice) {
+  let roundResult;
+  if (playerChoice === computerChoice) {
+    roundResult = "tie";
+  } else {
+    if (playerChoice === "rock" && computerChoice === "scissors"
+      || playerChoice === "paper" && computerChoice === "rock"
+      || playerChoice === "scissors" && computerChoice === "paper") {
+      roundResult = "win";
+    } else {
+      roundResult = "lose";
+    }
+  }
+  return roundResult;
+}
+
+function updateGameInfo(playerChoice, computerChoice, roundResult) {
+  let info = "";
+  switch (roundResult) {
+    case "win":
+      vibratePlayerImg(playerChoiceImg);
+      playerScore += 1;
+      info = `You win! ${playerChoice} beats ${computerChoice}`;
+      playerScoreInfo.textContent = `Player score ${playerScore}`;
+      roundInfo.textContent = info;
+      break;
+    case "lose":
+      vibratePlayerImg(computerChoiceImg);
+      computerScore += 1
+      info = `You lose! ${computerChoice} defeats ${playerChoice}`;
+      computerScoreInfo.textContent = `Computer score ${computerScore}`;
+      roundInfo.textContent = info;
+      break;
+    case "tie":
+      for (let element of [playerChoiceImg, computerChoiceImg]) {
+        vibratePlayerImg(element);
+      }
+      info = `It's a tie! ${playerChoice} on both sides`;
+      roundInfo.textContent = info;
+      break;
+  }
+  roundCounter += 1;
+  roundCounterInfo.textContent = `Round ${roundCounter}`;
+}
 
 function getComputerChoice() {
   let computerChoice = "";
@@ -128,3 +135,7 @@ function getComputerChoice() {
   }
   return computerChoice;
 }
+
+const image = document.querySelector('#github');
+image.classList.add('spin');
+setTimeout(() => { image.classList.remove('spin'); }, 10000); // Stop after 10 seconds
